@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Crawler_TCI.iml" filepath="$PROJECT_DIR$/.idea/modules/Crawler_TCI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Crawler_TCI/.idea/modules/Crawler_TCI_main.iml" filepath="$PROJECT_DIR$/../Crawler_TCI/.idea/modules/Crawler_TCI_main.iml" group="Crawler_TCI" />
+      <module fileurl="file://$PROJECT_DIR$/../Crawler_TCI/.idea/modules/Crawler_TCI_test.iml" filepath="$PROJECT_DIR$/../Crawler_TCI/.idea/modules/Crawler_TCI_test.iml" group="Crawler_TCI" />
+    </modules>
+  </component>
+</project>
