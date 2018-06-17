@@ -24,4 +24,6 @@ hs_err_pid*
 
 
 .idea/workspace.xml
+.idea/misc.xml
+.idea/modules
 
