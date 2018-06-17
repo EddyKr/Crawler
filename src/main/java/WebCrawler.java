@@ -14,6 +14,7 @@ public class WebCrawler {
     private List<Item> itemsList;
     private String rootURL;
     private String searchPhrase;
+    private long elapsedTime;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -25,6 +26,7 @@ public class WebCrawler {
         this.itemsList = new ArrayList<>();
         this.rootURL = null;
         this.searchPhrase = null;
+        this.elapsedTime = 0;
     }
 
     public Queue<String> getItemsQueue () {
@@ -74,6 +76,8 @@ public class WebCrawler {
         this.itemsQueue.add(rootURL);
         this.linksList.add(rootURL);
 
+        long start = System.nanoTime();
+
         while(!itemsQueue.isEmpty()){
             String v = this.itemsQueue.remove();
             //Crawl only target website - TODO change v.contains("tci") to accept more URLs
@@ -89,15 +93,24 @@ public class WebCrawler {
             }
         }
 
-        displayResult();
+        elapsedTime = System.nanoTime() - start;
 
-        chooseAction();
+        displayResult();
     }
 
     public void displayResult(){
-        if (!searchPhrase.isEmpty()){
-            System.out.println(itemsList.get(itemsList.size() - 1).title);
+        System.out.println("Time elapsed: " + elapsedTime);
+
+        if (searchPhrase != null){
+            System.out.println(itemsList.get(itemsList.size() - 1).returnAsJSON());
+        } else {
+            for (int i = 0; i < itemsList.size(); i++){
+                System.out.println(itemsList.get(i).returnAsJSON());
+            }
         }
+
+        System.out.println("");
+        chooseAction();
     }
 
     /**
@@ -132,10 +145,6 @@ public class WebCrawler {
 
             if (!searchPhrase.isEmpty()) {
                 if (newItem.title.equals(searchPhrase)){
-
-                    System.out.println("TITLE");
-                    System.out.println(newItem.title);
-
                     return false;
                 }
             }
