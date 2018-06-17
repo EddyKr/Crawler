@@ -1,3 +1,4 @@
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,12 +25,14 @@ public class WebCrawler {
     public Queue<String> getItemsQueue () {
         return itemsQueue;
     }
+    public List<String> getLinksList () { return linksList; }
 
     /**
      * Entry point for WebCrawling the given URL.
      *
      * @param  rootURL  an absolute URL the the page that will be scanned
      */
+
     public void crawl(String rootURL){
         this.itemsQueue.add(rootURL);
         this.linksList.add(rootURL);
