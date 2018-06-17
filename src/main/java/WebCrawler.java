@@ -155,7 +155,6 @@ public class WebCrawler {
                 String link = e.attr(attribute);
                 if(!linksList.contains(link)){
                     linksList.add(link);
-                    System.out.println("Link found: " + link);
                     itemsQueue.add(link);
                 }
             }
@@ -174,7 +173,11 @@ public class WebCrawler {
                 }
             }
 
-        } catch (Exception o) {System.out.println(o.getMessage());}
+        } catch (Exception o) {
+            if(o.getMessage() != null) {
+                System.out.println(o.getMessage());
+            }
+        }
 
         return true;
     }
