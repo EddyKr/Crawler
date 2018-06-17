@@ -39,7 +39,16 @@ public class WebCrawlerTest {
 
     @Test
     public void shouldGetLinkList() {
+        //arrange
+        when(webcrawler.getLinksList()).thenReturn(linksList);
 
+        //act
+        List<String> actual = webcrawler.getLinksList();
+        List<String> expected = linksList;
+
+        //assert
+        verify(webcrawler).getLinksList();
+        assertEquals(expected,actual);
     }
 
     @Test public void shouldCrawlTest () {
