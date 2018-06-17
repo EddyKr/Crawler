@@ -13,6 +13,9 @@ public class WebCrawler {
     private List<String> linksList;
     private List<Item> itemsList;
     private String rootURL;
+    private String searchPhrase;
+    private long elapsedTime;
+    private boolean itemFound;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -23,6 +26,9 @@ public class WebCrawler {
         this.linksList = new ArrayList<>();
         this.itemsList = new ArrayList<>();
         this.rootURL = null;
+        this.searchPhrase = null;
+        this.elapsedTime = 0;
+        this.itemFound = false;
     }
 
     public Queue<String> getItemsQueue () {
@@ -53,30 +59,82 @@ public class WebCrawler {
 
         switch(action){
             case "1":
-                crawl();
+                crawl("all");
                 break;
             case "2":
+                System.out.println("Input a search phrase.");
+                searchPhrase = sc.nextLine();
+                crawl("specific");
                 break;
         }
     }
 
     /**
      * Entry point for WebCrawling the whole website.
+     *
+     * @param  action  action to be performed for scan
      */
-    public void crawl(){
+    public void crawl(String action){
         this.itemsQueue.add(rootURL);
         this.linksList.add(rootURL);
 
-        while(!itemsQueue.isEmpty()){
+        long start = System.nanoTime();
 
+        while(!itemsQueue.isEmpty()){
             String v = this.itemsQueue.remove();
             //Crawl only target website - TODO change v.contains("tci") to accept more URLs
-            if(v.contains("tci")){
-                readUrl(v,"a", "abs:href");
+            if(v.contains(rootURL)){
+                if (action.equals("all")) {
+                    searchPhrase = null;
+                    readUrl(v, "a", "abs:href");
+                } else if (!searchPhrase.isEmpty()){
+                    if(!readUrl(v, "a", "abs:href")){
+                        break;
+                    }
+                }
             }
         }
 
+        elapsedTime = System.nanoTime() - start;
+
+        displayResult();
+    }
+
+    /**
+     * Entry point for WebCrawling the given URL.
+     */
+    public void displayResult(){
+        System.out.println("");
+        System.out.println("Time elapsed: " + elapsedTime);
+
+        if (searchPhrase != null){
+            if (itemFound) {
+                System.out.println(itemsList.get(itemsList.size() - 1).returnAsJSON());
+            } else {
+                System.out.println("Item not found!");
+            }
+        } else {
+            for (int i = 0; i < itemsList.size(); i++){
+                System.out.println(itemsList.get(i).returnAsJSON());
+            }
+        }
+
+        resetVariables();
+
+        System.out.println("");
         chooseAction();
+    }
+
+    /**
+     * Method used to reset all needed variables after run.
+     */
+    public void resetVariables(){
+        this.itemsQueue.clear();
+        this.linksList.clear();
+        this.itemsList.clear();
+        this.searchPhrase = null;
+        this.elapsedTime = 0;
+        this.itemFound = false;
     }
 
     /**
@@ -86,8 +144,9 @@ public class WebCrawler {
      * @param  url  an URL of the page that is suppose to get scanned
      * @param  findTag a search phrase that will be used to look for specific item
      * @param  attribute extra attribute that will be used with search
+     * @return if item has been found then return false in order to stop crawling
      */
-    public void readUrl(String url, String findTag, String attribute){
+    public boolean readUrl(String url, String findTag, String attribute){
         try {
             Document doc = Jsoup.connect(url).validateTLSCertificates(false).get();
             Elements links = doc.select(findTag);
@@ -96,7 +155,6 @@ public class WebCrawler {
                 String link = e.attr(attribute);
                 if(!linksList.contains(link)){
                     linksList.add(link);
-                    System.out.println("Link found: " + link);
                     itemsQueue.add(link);
                 }
             }
@@ -107,9 +165,20 @@ public class WebCrawler {
                 itemsList.add(newItem);
             }
 
-            System.out.println("Size of items list: ");
-            System.out.println(itemsList.size());
 
-        } catch (Exception o) {System.out.println(o.getMessage());}
+            if (!searchPhrase.isEmpty()) {
+                if (newItem.title.equals(searchPhrase)){
+                    itemFound = true;
+                    return false;
+                }
+            }
+
+        } catch (Exception o) {
+            if(o.getMessage() != null) {
+                System.out.println(o.getMessage());
+            }
+        }
+
+        return true;
     }
 }
