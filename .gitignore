@@ -25,5 +25,7 @@ hs_err_pid*
 
 .idea/workspace.xml
 .idea/misc.xml
-.idea/modules
+.idea/modules/Crawler_TCI_main.iml
+.idea/modules/Crawler_TCI_test.iml
+
 
