@@ -15,6 +15,7 @@ public class WebCrawler {
     private String rootURL;
     private String searchPhrase;
     private long elapsedTime;
+    private boolean itemFound;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -27,6 +28,7 @@ public class WebCrawler {
         this.rootURL = null;
         this.searchPhrase = null;
         this.elapsedTime = 0;
+        this.itemFound = false;
     }
 
     public Queue<String> getItemsQueue () {
@@ -98,19 +100,41 @@ public class WebCrawler {
         displayResult();
     }
 
+    /**
+     * Entry point for WebCrawling the given URL.
+     */
     public void displayResult(){
+        System.out.println("");
         System.out.println("Time elapsed: " + elapsedTime);
 
         if (searchPhrase != null){
-            System.out.println(itemsList.get(itemsList.size() - 1).returnAsJSON());
+            if (itemFound) {
+                System.out.println(itemsList.get(itemsList.size() - 1).returnAsJSON());
+            } else {
+                System.out.println("Item not found!");
+            }
         } else {
             for (int i = 0; i < itemsList.size(); i++){
                 System.out.println(itemsList.get(i).returnAsJSON());
             }
         }
 
+        resetVariables();
+
         System.out.println("");
         chooseAction();
+    }
+
+    /**
+     * Method used to reset all needed variables after run.
+     */
+    public void resetVariables(){
+        this.itemsQueue.clear();
+        this.linksList.clear();
+        this.itemsList.clear();
+        this.searchPhrase = null;
+        this.elapsedTime = 0;
+        this.itemFound = false;
     }
 
     /**
@@ -145,12 +169,10 @@ public class WebCrawler {
 
             if (!searchPhrase.isEmpty()) {
                 if (newItem.title.equals(searchPhrase)){
+                    itemFound = true;
                     return false;
                 }
             }
-
-            System.out.println("Size of items list: ");
-            System.out.println(itemsList.size());
 
         } catch (Exception o) {System.out.println(o.getMessage());}
 
