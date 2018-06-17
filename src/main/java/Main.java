@@ -8,7 +8,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your root URL: ");
         String URL = sc.nextLine() + " ";
-        mainCrawler.crawl(URL);
+        mainCrawler.startCrawling(URL);
 
     }
 }

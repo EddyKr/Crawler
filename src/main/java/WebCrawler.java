@@ -4,10 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class WebCrawler {
 
@@ -15,6 +12,7 @@ public class WebCrawler {
     private Queue<String> itemsQueue;
     private List<String> linksList;
     private List<Item> itemsList;
+    private String rootURL;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -24,6 +22,7 @@ public class WebCrawler {
         this.itemsQueue = new LinkedList<>();
         this.linksList = new ArrayList<>();
         this.itemsList = new ArrayList<>();
+        this.rootURL = null;
     }
 
     public Queue<String> getItemsQueue () {
@@ -32,12 +31,39 @@ public class WebCrawler {
     public List<String> getLinksList () { return linksList; }
 
     /**
-     * Entry point for WebCrawling the given URL.
+     * Entry point for crawling.
      *
      * @param  rootURL  an absolute URL the the page that will be scanned
      */
+    public void startCrawling(String rootURL){
+        this.rootURL = rootURL;
+        chooseAction();
+    }
 
-    public void crawl(String rootURL){
+    /**
+     * Method that allows the user to choose his next action.
+     */
+    public void chooseAction(){
+        System.out.println("Choose your next action:");
+        System.out.println("Press 1 to scrape all items from the website.");
+        System.out.println("Press 2 to look for specific item on the website.");
+
+        Scanner sc = new Scanner(System.in);
+        String action = sc.nextLine();
+
+        switch(action){
+            case "1":
+                crawl();
+                break;
+            case "2":
+                break;
+        }
+    }
+
+    /**
+     * Entry point for WebCrawling the whole website.
+     */
+    public void crawl(){
         this.itemsQueue.add(rootURL);
         this.linksList.add(rootURL);
 
@@ -49,6 +75,8 @@ public class WebCrawler {
                 readUrl(v,"a", "abs:href");
             }
         }
+
+        chooseAction();
     }
 
     /**
