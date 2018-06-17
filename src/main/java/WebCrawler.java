@@ -83,7 +83,7 @@ public class WebCrawler {
         while(!itemsQueue.isEmpty()){
             String v = this.itemsQueue.remove();
             //Crawl only target website - TODO change v.contains("tci") to accept more URLs
-            if(v.contains("tci")){
+            if(v.contains(rootURL)){
                 if (action.equals("all")) {
                     searchPhrase = null;
                     readUrl(v, "a", "abs:href");

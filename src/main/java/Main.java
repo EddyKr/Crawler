@@ -7,7 +7,7 @@ public class Main {
         WebCrawler mainCrawler = new WebCrawler();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your root URL: ");
-        String URL = sc.nextLine() + " ";
+        String URL = sc.nextLine();
         mainCrawler.startCrawling(URL);
 
     }
