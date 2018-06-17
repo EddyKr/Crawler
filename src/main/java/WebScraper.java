@@ -3,6 +3,12 @@ import org.jsoup.nodes.Document;
 
 public class WebScraper {
 
+    ItemMapper itemMapper;
+
+    public WebScraper(){
+        itemMapper = new ItemMapper();
+    }
+
     /**
      * Returns an Item object that will be stored in the itemsList.
      * The doc object should be scraped subpage of a given website that contains one of three types of items.
@@ -11,6 +17,8 @@ public class WebScraper {
      * @return      Item object
      */
     public Item checkItem(Document doc){
-        return null;
+        Item item = itemMapper.mapItem(doc);
+
+        return item;
     }
 }
