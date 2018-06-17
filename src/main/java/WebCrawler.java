@@ -11,15 +11,19 @@ import java.util.Queue;
 
 public class WebCrawler {
 
+    private WebScraper webScraper;
     private Queue<String> itemsQueue;
     private List<String> linksList;
+    private List<Item> itemsList;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
      */
     public WebCrawler(){
+        this.webScraper = new WebScraper();
         this.itemsQueue = new LinkedList<>();
         this.linksList = new ArrayList<>();
+        this.itemsList = new ArrayList<>();
     }
 
     public Queue<String> getItemsQueue () {
@@ -68,6 +72,15 @@ public class WebCrawler {
                     itemsQueue.add(link);
                 }
             }
+
+            Item newItem = webScraper.checkItem(doc);
+
+            if (newItem != null) {
+                itemsList.add(newItem);
+            }
+
+            System.out.println("Size of items list: ");
+            System.out.println(itemsList.size());
 
         } catch (Exception o) {System.out.println(o.getMessage());}
     }

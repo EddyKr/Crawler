@@ -1,3 +1,5 @@
+import netscape.javascript.JSObject;
+
 public class Item {
     public String title;
     public String category;
@@ -14,5 +16,12 @@ public class Item {
         this.genre = genre;
         this.format = format;
         this.year = year;
+    }
+
+    /**
+     * Method that will map an item and return it as a JSON object.
+     */
+    public JSObject returnAsJSON(){
+        return null;
     }
 }
