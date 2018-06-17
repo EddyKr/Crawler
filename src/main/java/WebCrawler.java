@@ -25,7 +25,7 @@ public class WebCrawler {
     public Queue<String> getItemsQueue () {
         return itemsQueue;
     }
-
+    public List<String> getLinksList () { return linksList; }
 
     /**
      * Entry point for WebCrawling the given URL.
