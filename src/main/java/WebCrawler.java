@@ -50,7 +50,7 @@ public class WebCrawler {
      *
      * @param  url  an URL of the page that is suppose to get scanned
      * @param  findTag a search phrase that will be used to look for specific item
-     * @param attribute extra attribute that will be used with search
+     * @param  attribute extra attribute that will be used with search
      */
     public void readUrl(String url, String findTag, String attribute){
         try {
@@ -61,7 +61,7 @@ public class WebCrawler {
                 String link = e.attr(attribute);
                 if(!linksList.contains(link)){
                     linksList.add(link);
-                    System.out.println("Found: "+link);
+                    System.out.println("Link found: " + link);
                     itemsQueue.add(link);
                 }
             }
