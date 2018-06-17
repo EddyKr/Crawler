@@ -1,4 +1,4 @@
-import netscape.javascript.JSObject;
+import com.google.gson.Gson;
 
 public class Item {
     public String title;
@@ -21,7 +21,11 @@ public class Item {
     /**
      * Method that will map an item and return it as a JSON object.
      */
-    public JSObject returnAsJSON(){
-        return null;
+    public String returnAsJSON(){
+        Gson gson = new Gson();
+        String itemJSON = null;
+        itemJSON = gson.toJson(this);
+
+        return itemJSON;
     }
 }

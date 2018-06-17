@@ -41,7 +41,7 @@ public class ItemMapper {
     public Book createBookObject(Document doc){
 
         //Map book into an object
-        String title = doc.getElementsByTag("h1").first().html();
+        String title = doc.select("div.media-details").select("h1").html();
 
         Element table = doc.select("div.media-details").select("table").get(0);
         Elements rows = table.select("tr");
@@ -56,8 +56,6 @@ public class ItemMapper {
 
         Book bookItem = new Book(title, category, genre, format, year, authors, publisher, isbn);
 
-        System.out.println(table);
-
         return bookItem;
     }
 
@@ -68,7 +66,7 @@ public class ItemMapper {
      */
     public Movie createMovieObject(Document doc){
         //Map movie into an object
-        String title = doc.getElementsByTag("h1").first().html();
+        String title = doc.select("div.media-details").select("h1").html();
 
         Element table = doc.select("div.media-details").select("table").get(0);
         Elements rows = table.select("tr");
@@ -83,8 +81,6 @@ public class ItemMapper {
 
         Movie movieItem = new Movie(title, category, genre, format, year, directors, writers, stars);
 
-        System.out.println(table);
-
         return movieItem;
     }
 
@@ -95,7 +91,7 @@ public class ItemMapper {
      */
     public Music createMusicObject(Document doc){
         //Map music into an object
-        String title = doc.getElementsByTag("h1").first().html();
+        String title = doc.select("div.media-details").select("h1").html();
 
         Element table = doc.select("div.media-details").select("table").get(0);
         Elements rows = table.select("tr");
@@ -107,8 +103,6 @@ public class ItemMapper {
         String artist = rows.get(4).select("td").html();
 
         Music musicItem = new Music(title, category, genre, format, year, artist);
-
-        System.out.println(table);
 
         return musicItem;
     }

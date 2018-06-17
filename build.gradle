@@ -17,5 +17,5 @@ dependencies {
     compile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.0.4'
     compile 'org.jsoup:jsoup:1.11.3'
     compile 'org.json:json:20171018'
-
+    compile 'com.google.code.gson:gson:2.2.4'
 }
