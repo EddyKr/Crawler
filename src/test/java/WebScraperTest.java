@@ -4,6 +4,8 @@ import org.jsoup.nodes.Document;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
@@ -31,5 +33,13 @@ public class WebScraperTest {
 
     }
 
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerCheckItem () {
+        //arrange
+        doThrow(NullPointerException.class).when(webScraper).checkItem(isNull());
+
+        //act
+        webScraper.checkItem(isNull());
+    }
 
 }

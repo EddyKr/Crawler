@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class WebCrawlerTest {
     private WebCrawler webcrawler = mock(WebCrawler.class);
@@ -70,5 +68,14 @@ public class WebCrawlerTest {
 
         //assert
         verify(webcrawler).readUrl(API_URL,TAG,ATTRIBUTE);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullReadUrl() {
+        //arrange
+        doThrow(NullPointerException.class).when(webcrawler).readUrl(isNull(),anyString(),anyString());
+
+        //act
+        webcrawler.readUrl(isNull(),anyString(),anyString());
     }
 }
