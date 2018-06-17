@@ -39,18 +39,6 @@ public class ItemMapperTest {
 
     @Test
     public void shouldCreateBookObject() {
-//        String selectTable = "table";
-//        String cssQuery = "div.media-details";
-//        String title = "Test title";
-//        String category = "Test category";
-//        String genre = "Test genre";
-//        String format = "Test format";
-//        Integer year = 1990;
-//        String authors = "Test authors";
-//        String publisher = "Test publisher";
-//        String isbn = "Test isbn";
-//
-//        Elements rows = mock(Elements.class);
         //arrange
         when(itemMapper.createBookObject(doc)).thenReturn(book);
 
@@ -64,7 +52,6 @@ public class ItemMapperTest {
     @Test
     public void shouldCreateMovieObject() {
         //arrange
-
         when(itemMapper.createMovieObject(doc)).thenReturn(movie);
 
         //act
