@@ -1,6 +1,11 @@
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +24,7 @@ public class WebCrawlerTest {
     //5.shouldThrowNullReadUrl
 
     private WebCrawler webcrawler = mock(WebCrawler.class);
+    private Item testItem = mock(Item.class);
     private Queue<String> itemsQueue = new LinkedList<>();
     private List<String> linksList = new ArrayList<>();
     private static final String API_URL = "https://localhost/tci";
@@ -65,11 +71,13 @@ public class WebCrawlerTest {
         assertEquals(expected,actual);
     }
 
+
     //3
     //input: root url
     //expected: to crawl provided website
     //output: crawling verified
     @Test public void shouldCrawlTest () {
+
         //arrange
 
         //act
@@ -86,6 +94,12 @@ public class WebCrawlerTest {
     @Test
     public void shouldReadUrl() {
         //arrange
+        WebScraper webScraper = mock(WebScraper.class);
+        Document doc = mock(Document.class);
+        Elements elements = mock(Elements.class);
+
+        when(webScraper.checkItem(doc)).thenReturn(testItem);
+        when(doc.select(TAG)).thenReturn(elements);
 
         //act
         webcrawler.readUrl(API_URL,TAG,ATTRIBUTE);
