@@ -22,7 +22,6 @@ public class WebCrawlerTest {
     private static final String API_URL = "https://localhost/tci";
     private static final String TAG = "a";
     private static final String ATTRIBUTE = "abs:href";
-    private static final String ACTION = "all";
 
     @Before
     public void initialization(){
@@ -56,9 +55,8 @@ public class WebCrawlerTest {
         assertEquals(expected,actual);
     }
 
-    @Test public void shouldCrawlTest () throws IOException {
+    @Test public void shouldCrawlTest() {
         //arrange
-
 
         //act
         webcrawler.crawl(API_URL);
