@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 public class Item {
+    //Variables
     public String title;
     public String category;
     public String genre;

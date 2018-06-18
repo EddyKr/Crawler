@@ -12,6 +12,11 @@ import static org.junit.Assert.assertEquals;
 
 
 public class WebScraperTest {
+
+    //Tests:
+    //1.shouldCheckItem
+    //2.shouldThrowNullPointerCheckItem
+
     private WebScraper webScraper = mock(WebScraper.class);
     private Item testItem = mock(Item.class);
 
@@ -19,6 +24,10 @@ public class WebScraperTest {
     public void initialization(){
     }
 
+    //1
+    //input:Item
+    //expected: object to be instance of Item class
+    //output: Item class object
     @Test
     public void shouldCheckItem() {
         Document document = mock(Document.class);
@@ -33,6 +42,10 @@ public class WebScraperTest {
 
     }
 
+    //2
+    //input: null Item
+    //expected: NullPointerException to be raised
+    //output: raised NullPointerException
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerCheckItem () {
         //arrange
