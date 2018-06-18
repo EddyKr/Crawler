@@ -10,6 +10,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ItemTest {
+
+    //Tests:
+    //1.shouldReturnAsJSON
+
     private Item itemTest= mock(Item.class);
     private static final  String jsonObject = "[]";
 
@@ -17,6 +21,10 @@ public class ItemTest {
     public void initialization(){
     }
 
+    //1
+    //input: Item
+    //expected: return string in json format
+    //output: returns string in json format
     @Test
     public void shouldReturnAsJSON() {
         //arrange

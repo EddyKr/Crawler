@@ -8,6 +8,7 @@ import java.util.*;
 
 public class WebCrawler {
 
+    //Variables
     private WebScraper webScraper;
     private Queue<String> itemsQueue;
     private List<String> linksList;
@@ -31,6 +32,7 @@ public class WebCrawler {
         this.itemFound = false;
     }
 
+    // Getters
     public Queue<String> getItemsQueue () {
         return itemsQueue;
     }

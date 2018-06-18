@@ -15,6 +15,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class WebCrawlerTest {
+
+    //Tests:
+    //1.shouldGetItemsQueue
+    //2.shouldGetLinkList
+    //3.shouldCrawlTest
+    //4.shouldReadUrl
+    //5.shouldThrowNullReadUrl
+
     private WebCrawler webcrawler = mock(WebCrawler.class);
     private Item testItem = mock(Item.class);
     private Queue<String> itemsQueue = new LinkedList<>();
@@ -27,6 +35,10 @@ public class WebCrawlerTest {
     public void initialization(){
     }
 
+    //1
+    //input: calls queue getter
+    //expected: receive list with queue
+    //output: gets queue list
     @Test
     public void shouldGetItemsQueue() {
         //arrange
@@ -41,6 +53,10 @@ public class WebCrawlerTest {
         assertEquals(expected,actual);
     }
 
+    //2
+    //input: calls list getter
+    //expected: receive list with links
+    //output: gets links list
     @Test
     public void shouldGetLinkList() {
         //arrange
@@ -55,7 +71,13 @@ public class WebCrawlerTest {
         assertEquals(expected,actual);
     }
 
-    @Test public void shouldCrawlTest() {
+
+    //3
+    //input: root url
+    //expected: to crawl provided website
+    //output: crawling verified
+    @Test public void shouldCrawlTest () {
+
         //arrange
 
         //act
@@ -65,6 +87,10 @@ public class WebCrawlerTest {
         verify(webcrawler).crawl(API_URL);
     }
 
+    //4
+    //input: website url, searched tag & attribute
+    //expected: to read url according to tag and its attribute
+    //output: verifies
     @Test
     public void shouldReadUrl() {
         //arrange
@@ -82,6 +108,10 @@ public class WebCrawlerTest {
         verify(webcrawler).readUrl(API_URL,TAG,ATTRIBUTE);
     }
 
+    //5
+    //input: null as url
+    //expected: to raise NullPointerException
+    //output: raises NullPointerException
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullReadUrl() {
         //arrange

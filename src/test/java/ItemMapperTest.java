@@ -11,6 +11,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ItemMapperTest {
+
+    //Tests:
+    //1.shouldMapItem
+    //2.shouldCreateBookObject
+    //3.shouldCreateMovieObject
+    //4.shouldCreateMusicObject
+
     private ItemMapper itemMapper = mock(ItemMapper.class);
     private Item item = mock(Item.class);
     private Book book = mock(Book.class);
@@ -25,6 +32,10 @@ public class ItemMapperTest {
     public void initialization(){
     }
 
+    //1
+    //input: Item
+    //expected: item to get mapped
+    //output: item getts mapped
     @Test
     public void shouldMapItem() {
         //arrange
@@ -37,6 +48,10 @@ public class ItemMapperTest {
         assertThat(actual, instanceOf(Item.class));
     }
 
+    //2
+    //input: Book item
+    //expected: to create book object (itme)
+    //output: item is an object of a Book class
     @Test
     public void shouldCreateBookObject() {
         //arrange
@@ -49,6 +64,10 @@ public class ItemMapperTest {
         assertThat(actual, instanceOf(Book.class));
     }
 
+    //3
+    //input: Movie item
+    //expected: to create movie object (itme)
+    //output: item is an object of a Movie class
     @Test
     public void shouldCreateMovieObject() {
         //arrange
@@ -61,6 +80,10 @@ public class ItemMapperTest {
         assertThat(actual, instanceOf(Movie.class));
     }
 
+    //4
+    //input: Music item
+    //expected: to create music object (itme)
+    //output: item is an object of a Music class
     @Test
     public void shouldCreateMusicObject() {
         //arrange
