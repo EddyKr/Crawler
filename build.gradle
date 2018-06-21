@@ -25,3 +25,5 @@ jar {
         attributes 'Main-Class': 'Main'
     }
 }
+
+buildScan { termsOfServiceUrl = 'https://gradle.com/terms-of-service'; termsOfServiceAgree = 'yes' }
