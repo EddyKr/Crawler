@@ -8,7 +8,6 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     jcenter()
-
 }
 
 dependencies {
@@ -29,3 +28,5 @@ jar {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
+buildScan { termsOfServiceUrl = 'https://gradle.com/terms-of-service'; termsOfServiceAgree = 'yes' }
