@@ -11,15 +11,18 @@ import static org.mockito.Mockito.when;
 
 public class ItemTest {
 
-    //Tests:
-    //1.shouldReturnAsJSON
-
-    private Item itemTest= mock(Item.class);
-    private static final  String jsonObject = "[]";
-
     @Before
     public void initialization(){
     }
+
+    @Test
+    public void constructorShouldSetTitleAndCategory(){
+        Item item = new Item("Test", "Something", "SomeGenre", "SomeFormat", 1993);
+
+        assertEquals("Test", item.title);
+        assertEquals("Something", item.category);
+    }
+
 
     //1
     //input: Item
@@ -28,13 +31,14 @@ public class ItemTest {
     @Test
     public void shouldReturnAsJSON() {
         //arrange
-        when(itemTest.returnAsJSON()).thenReturn(jsonObject);
+        Item item = new Item("Test", "Something", "SomeGenre", "SomeFormat", 1993);
+        String expected = "{\"title\":\"Test\",\"category\":\"Something\",\"genre\":\"SomeGenre\",\"format\":\"SomeFormat\",\"year\":1993}";
 
         //act
-        String actual = itemTest.returnAsJSON();
+        String result = item.returnAsJSON();
 
         //assert
-        assertEquals(jsonObject,actual);
+        assertEquals(expected, result);
     }
 
 }
