@@ -1,13 +1,7 @@
-import com.google.gson.Gson;
-import netscape.javascript.JSObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ItemTest {
 
@@ -21,6 +15,11 @@ public class ItemTest {
 
         assertEquals("Test", item.title);
         assertEquals("Something", item.category);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void constructorShouldThrowIAForInvalidYear(){
+        Item item = new Item("Test", "Something", "SomeGenre", "SomeFormat", -5);
     }
 
 
@@ -40,5 +39,4 @@ public class ItemTest {
         //assert
         assertEquals(expected, result);
     }
-
 }

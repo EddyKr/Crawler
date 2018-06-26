@@ -12,6 +12,12 @@ public class Item {
      * Constructor of an Item used to store most important information.
      */
     public Item(String title, String category, String genre, String format, Integer year){
+
+        if (year < 0) {
+            throw new IllegalArgumentException(
+                    "Illegal year: [" + year + "]");
+        }
+
         this.title = title;
         this.category = category;
         this.genre = genre;
