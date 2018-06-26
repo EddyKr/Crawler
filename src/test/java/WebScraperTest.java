@@ -65,6 +65,9 @@ public class WebScraperTest {
 
         //assert
         assertThat(actual,instanceOf(Book.class));
+        assertEquals(actual.title, "Clean Code: A Handbook of Agile Software Craftsmanship");
+        assertEquals(actual.category, "Books");
+        assertEquals(actual.format, "Ebook");
     }
 
 }
