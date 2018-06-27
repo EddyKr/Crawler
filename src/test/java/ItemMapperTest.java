@@ -50,7 +50,7 @@ public class ItemMapperTest {
 
     //2
     //input: Book item
-    //expected: to create book object (itme)
+    //expected: to create book object (item)
     //output: item is an object of a Book class
     @Test
     public void shouldCreateBookObject() {

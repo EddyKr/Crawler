@@ -1,4 +1,5 @@
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -83,7 +84,6 @@ public class WebCrawler {
 
         while(!itemsQueue.isEmpty()){
             String v = this.itemsQueue.remove();
-            //Crawl only target website - TODO change v.contains("tci") to accept more URLs
             if(v.contains(rootURL)){
                 if (action.equals("all")) {
                     searchPhrase = null;
