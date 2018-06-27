@@ -46,6 +46,9 @@ public class WebCrawlerTest {
             "              </tbody></table>\n" +
             "              <a href=\"catalog.php\">Personal Media Library</a>\n" +
             "    </div>";
+    public String HTML_STRING2 = "<div class=\"media-details\">\n" +
+            "              <a href=\"catalog.php\">Personal Media Library</a>\n" +
+            "    </div>";
 
     @Before
     public void initialization(){
@@ -89,13 +92,12 @@ public class WebCrawlerTest {
     }
 
     @Test
-    public void shouldReadUrlWithoutSearchPhrase() {
+    public void shouldReadUrlWithSearchPhrase() {
         //arrange
         WebCrawler webCrawler = new WebCrawler();
         webCrawler.rootURL = "http://something.com";
         webCrawler.searchPhrase = "The Lord of the Rings: The Fellowship of the Ring";
         String action = "specific";
-        Elements elements = mock(Elements.class);
         DocumentHelper docHelper = mock(DocumentHelper.class);
         Document document = Jsoup.parse(HTML_STRING);
         when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
@@ -109,13 +111,46 @@ public class WebCrawlerTest {
     }
 
     @Test
+    public void shouldReadUrlWithInvalidSearchPhrase() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "http://something.com";
+        webCrawler.searchPhrase = "random string";
+        String action = "specific";
+        DocumentHelper docHelper = mock(DocumentHelper.class);
+        Document document = Jsoup.parse(HTML_STRING2);
+        when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
+
+        //act
+        webCrawler.crawl(action, docHelper);
+
+        //assert
+        assertEquals(0, webCrawler.itemsList.size());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void shouldReadUrlWithWrongSearchPhrase() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "http://something.com";
+        webCrawler.searchPhrase = null;
+        String action = "specific";
+        DocumentHelper docHelper = mock(DocumentHelper.class);
+        Document document = Jsoup.parse(HTML_STRING);
+        when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
+
+        //act
+        webCrawler.crawl(action, docHelper);
+
+    }
+
+    @Test
     public void shouldChooseActionAll() {
         //arrange
         WebCrawler webCrawler = new WebCrawler();
         webCrawler.rootURL = "http://something.com";
         System.setIn(new ByteArrayInputStream("1".getBytes()));
         DocumentHelper docHelper = mock(DocumentHelper.class);
-
         Document document = Jsoup.parse(HTML_STRING);
         when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
 
