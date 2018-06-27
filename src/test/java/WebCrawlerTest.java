@@ -123,16 +123,32 @@ public class WebCrawlerTest {
         webCrawler.rootURL = "https://localhost/tci";
         webCrawler.searchPhrase = "Clean Code: A Handbook of Agile Software Craftsmanship";
 
-        ByteArrayInputStream in = new ByteArrayInputStream("2".getBytes());
-        System.setIn(in);
 
         //act
-        webCrawler.chooseAction();
+        webCrawler.crawl("specific");
 
         //assert
         System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
-
     }
+
+    @Test
+    public void shouldChooseActionSpecificNotFindItem() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "https://localhost/tci";
+        webCrawler.searchPhrase = "some random item";
+
+        //act
+        webCrawler.crawl("specific");
+
+        //assert
+        System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
+    }
+
+//    @Test
+//    public void shouldStartCrawling(){
+//
+//    }
 
     @Test
     public void shouldGetItemsQueue() {
