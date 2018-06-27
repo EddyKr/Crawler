@@ -24,9 +24,6 @@ public class ItemMapperTest {
     private Movie movie = mock(Movie.class);
     private Music music = mock(Music.class);
     private Document doc = mock(Document.class);
-    private static final String ELEMENT_TAG = "tbody";
-    private static final String ELEMENT_TAG_2 = "td";
-    private static final String CATEGORY = "Movies";
 
     @Before
     public void initialization(){

@@ -1,12 +1,7 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class WebCrawlerTest {
@@ -77,8 +72,11 @@ public class WebCrawlerTest {
 
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void shouldStartCrawling() {
-
+        //assert
+        WebCrawler webCrawler = new WebCrawler();
+        String action = "some action";
+        webCrawler.crawl(action);
     }
 }
