@@ -62,12 +62,12 @@ public class WebCrawler {
 
         switch(action){
             case "1":
-                crawl("all");
+                crawl("all", documentHelper);
                 break;
             case "2":
                 System.out.println("Input a search phrase.");
                 searchPhrase = sc.nextLine();
-                crawl("specific");
+                crawl("specific", documentHelper);
                 break;
 
             default:
@@ -80,7 +80,7 @@ public class WebCrawler {
      *
      * @param  action  action to be performed for scan
      */
-    public void crawl(String action){
+    public void crawl(String action, DocumentHelper docHelper){
         if(!action.equals("all") && !action.equals("specific")){
             throw new IllegalArgumentException("Illegal action: " + action);
         }
@@ -94,9 +94,9 @@ public class WebCrawler {
             if(v.contains(rootURL)){
                 if (action.equals("all")) {
                     searchPhrase = null;
-                    readUrl(v, "a", "abs:href");
+                    readUrl(v, "a", "abs:href", docHelper);
                 } else if (!searchPhrase.isEmpty()){
-                    if(!readUrl(v, "a", "abs:href")){
+                    if(!readUrl(v, "a", "abs:href", docHelper)){
                         break;
                     }
                 }
@@ -127,8 +127,6 @@ public class WebCrawler {
             }
         }
 
-        resetVariables();
-
         System.out.println("");
     }
 
@@ -153,9 +151,9 @@ public class WebCrawler {
      * @param  attribute extra attribute that will be used with search
      * @return if item has been found then return false in order to stop crawling
      */
-    public boolean readUrl(String url, String findTag, String attribute){
+    public boolean readUrl(String url, String findTag, String attribute, DocumentHelper docHelper){
         try {
-            Document doc = documentHelper.getDocumentFromUrl(url);
+            Document doc = docHelper.getDocumentFromUrl(url);
             Elements links = doc.select(findTag);
             for (Element e : links) {
 
