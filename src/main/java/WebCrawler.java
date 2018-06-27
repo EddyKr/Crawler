@@ -10,6 +10,7 @@ public class WebCrawler {
 
     //Variables
     private WebScraper webScraper;
+    public DocumentHelper documentHelper;
     private Queue<String> itemsQueue;
     public List<String> linksList;
     public List<Item> itemsList;
@@ -30,6 +31,7 @@ public class WebCrawler {
         this.searchPhrase = null;
         this.elapsedTime = 0;
         this.itemFound = false;
+        this.documentHelper = new DocumentHelper();
     }
 
     // Getters
@@ -44,13 +46,13 @@ public class WebCrawler {
      */
     public void startCrawling(String rootURL){
         this.rootURL = rootURL;
-        chooseAction();
+        chooseAction(documentHelper);
     }
 
     /**
      * Method that allows the user to choose his next action.
      */
-    public void chooseAction(){
+    public void chooseAction(DocumentHelper docHelper){
         System.out.println("Choose your next action:");
         System.out.println("Press 1 to scrape all items from the website.");
         System.out.println("Press 2 to look for specific item on the website.");
@@ -60,13 +62,16 @@ public class WebCrawler {
 
         switch(action){
             case "1":
-                crawl("all");
+                crawl("all", docHelper);
                 break;
             case "2":
                 System.out.println("Input a search phrase.");
                 searchPhrase = sc.nextLine();
-                crawl("specific");
+                crawl("specific", docHelper);
                 break;
+
+            default:
+                throw new IllegalArgumentException("This option does not exist");
         }
     }
 
@@ -75,7 +80,7 @@ public class WebCrawler {
      *
      * @param  action  action to be performed for scan
      */
-    public void crawl(String action){
+    public void crawl(String action, DocumentHelper docHelper){
         if(!action.equals("all") && !action.equals("specific")){
             throw new IllegalArgumentException("Illegal action: " + action);
         }
@@ -89,9 +94,9 @@ public class WebCrawler {
             if(v.contains(rootURL)){
                 if (action.equals("all")) {
                     searchPhrase = null;
-                    readUrl(v, "a", "abs:href");
+                    readUrl(v, "a", "abs:href", docHelper);
                 } else if (!searchPhrase.isEmpty()){
-                    if(!readUrl(v, "a", "abs:href")){
+                    if(!readUrl(v, "a", "abs:href", docHelper)){
                         break;
                     }
                 }
@@ -122,10 +127,7 @@ public class WebCrawler {
             }
         }
 
-        resetVariables();
-
         System.out.println("");
-        chooseAction();
     }
 
     /**
@@ -149,9 +151,9 @@ public class WebCrawler {
      * @param  attribute extra attribute that will be used with search
      * @return if item has been found then return false in order to stop crawling
      */
-    public boolean readUrl(String url, String findTag, String attribute){
+    public boolean readUrl(String url, String findTag, String attribute, DocumentHelper docHelper){
         try {
-            Document doc = Jsoup.connect(url).validateTLSCertificates(false).get();
+            Document doc = docHelper.getDocumentFromUrl(url);
             Elements links = doc.select(findTag);
             for (Element e : links) {
 
