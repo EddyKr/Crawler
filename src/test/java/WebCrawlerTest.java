@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -86,22 +87,52 @@ public class WebCrawlerTest {
         webCrawler.crawl(action);
     }
 
-//    @Test
-//    public void shouldCrawl() {
-//        //arrange
-//        WebCrawler webCrawler = new WebCrawler();
-//        webCrawler.rootURL = "http://localhost/tci/details.php?id=103";
-//        webCrawler.searchPhrase = "some_string";
-//
-//        String action = "specific";
-//        Queue<String> actual = webCrawler.getItemsQueue();
-//        System.out.print(actual.size());
-//        //act
-//        webCrawler.crawl(action);
-//
-//        //assert
-//
-//    }
+    @Test (expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionChooseAction() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "https://localhost/tci";
+
+        ByteArrayInputStream in = new ByteArrayInputStream("3".getBytes());
+        System.setIn(in);
+
+        //act
+        webCrawler.chooseAction();
+    }
+
+    @Test
+    public void shouldChooseActionAll() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "https://localhost/tci";
+
+        ByteArrayInputStream in = new ByteArrayInputStream("1".getBytes());
+        System.setIn(in);
+
+        //act
+        webCrawler.chooseAction();
+
+        //assert
+        System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
+    }
+
+    @Test
+    public void shouldChooseActionSpecific() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "https://localhost/tci";
+        webCrawler.searchPhrase = "Clean Code: A Handbook of Agile Software Craftsmanship";
+
+        ByteArrayInputStream in = new ByteArrayInputStream("2".getBytes());
+        System.setIn(in);
+
+        //act
+        webCrawler.chooseAction();
+
+        //assert
+        System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
+
+    }
 
     @Test
     public void shouldGetItemsQueue() {

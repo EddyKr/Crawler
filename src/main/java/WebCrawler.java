@@ -64,9 +64,12 @@ public class WebCrawler {
                 break;
             case "2":
                 System.out.println("Input a search phrase.");
-                searchPhrase = sc.nextLine();
+//                searchPhrase = sc.nextLine();
                 crawl("specific");
                 break;
+
+            default:
+                throw new IllegalArgumentException("This option does not exist");
         }
     }
 
@@ -125,7 +128,6 @@ public class WebCrawler {
         resetVariables();
 
         System.out.println("");
-        chooseAction();
     }
 
     /**
