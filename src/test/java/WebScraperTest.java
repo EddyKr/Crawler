@@ -1,3 +1,4 @@
+import org.jsoup.Jsoup;
 import org.junit.Before;
 import org.junit.Test;
 import org.jsoup.nodes.Document;
@@ -12,14 +13,6 @@ import static org.junit.Assert.assertEquals;
 
 
 public class WebScraperTest {
-
-    //Tests:
-    //1.shouldCheckItem
-    //2.shouldThrowNullPointerCheckItem
-
-    private WebScraper webScraper = mock(WebScraper.class);
-    private Item testItem = mock(Item.class);
-
     @Before
     public void initialization(){
     }
@@ -30,29 +23,51 @@ public class WebScraperTest {
     //output: Item class object
     @Test
     public void shouldCheckItem() {
-        Document document = mock(Document.class);
-        Item item = mock(Item.class);
-        when(webScraper.checkItem(document)).thenReturn(item);
+        //arrange
+        WebScraper webScraper = new WebScraper();
+
+        Document document = Jsoup.parse("<div class=\"media-details\">\n" +
+                "      <h1>Clean Code: A Handbook of Agile Software Craftsmanship</h1>\n" +
+                "      <table>\n" +
+                "        <tbody><tr>\n" +
+                "          <th>Category</th>\n" +
+                "          <td>Books</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "          <th>Genre</th>\n" +
+                "          <td>Tech</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "          <th>Format</th>\n" +
+                "          <td>Ebook</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "          <th>Year</th>\n" +
+                "          <td>2008</td>\n" +
+                "        </tr>\n" +
+                "                <tr>\n" +
+                "          <th>Authors</th>\n" +
+                "          <td>Robert C. Martin</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "          <th>Publisher</th>\n" +
+                "          <td>Prentice Hall</td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "          <th>ISBN</th>\n" +
+                "          <td>978-0132350884</td>\n" +
+                "        </tr>\n" +
+                "              </tbody></table>\n" +
+                "    </div>");
 
         //act
         Item actual = webScraper.checkItem(document);
 
         //assert
-        assertThat(actual,instanceOf(Item.class));
-
-    }
-
-    //2
-    //input: null Item
-    //expected: NullPointerException to be raised
-    //output: raised NullPointerException
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerCheckItem () {
-        //arrange
-        doThrow(NullPointerException.class).when(webScraper).checkItem(isNull());
-
-        //act
-        webScraper.checkItem(isNull());
+        assertThat(actual,instanceOf(Book.class));
+        assertEquals(actual.title, "Clean Code: A Handbook of Agile Software Craftsmanship");
+        assertEquals(actual.category, "Books");
+        assertEquals(actual.format, "Ebook");
     }
 
 }

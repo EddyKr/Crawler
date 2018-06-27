@@ -11,8 +11,8 @@ public class WebCrawler {
     //Variables
     private WebScraper webScraper;
     private Queue<String> itemsQueue;
-    private List<String> linksList;
-    private List<Item> itemsList;
+    public List<String> linksList;
+    public List<Item> itemsList;
     private String rootURL;
     private String searchPhrase;
     private long elapsedTime;
@@ -36,7 +36,6 @@ public class WebCrawler {
     public Queue<String> getItemsQueue () {
         return itemsQueue;
     }
-    public List<String> getLinksList () { return linksList; }
 
     /**
      * Entry point for crawling.
