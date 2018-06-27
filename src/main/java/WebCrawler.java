@@ -1,5 +1,4 @@
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -31,6 +30,11 @@ public class WebCrawler {
         this.searchPhrase = null;
         this.elapsedTime = 0;
         this.itemFound = false;
+    }
+
+    // Getters
+    public Queue<String> getItemsQueue () {
+        return itemsQueue;
     }
 
     /**
