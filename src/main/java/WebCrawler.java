@@ -14,10 +14,10 @@ public class WebCrawler {
     private Queue<String> itemsQueue;
     public List<String> linksList;
     public List<Item> itemsList;
-    private String rootURL;
-    private String searchPhrase;
+    public String rootURL;
+    public String searchPhrase;
     private long elapsedTime;
-    private boolean itemFound;
+    public boolean itemFound;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -31,11 +31,6 @@ public class WebCrawler {
         this.searchPhrase = null;
         this.elapsedTime = 0;
         this.itemFound = false;
-    }
-
-    // Getters
-    public Queue<String> getItemsQueue () {
-        return itemsQueue;
     }
 
     /**

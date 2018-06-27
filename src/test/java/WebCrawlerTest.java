@@ -1,3 +1,4 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -47,13 +48,37 @@ public class WebCrawlerTest {
         WebCrawler webCrawler = new WebCrawler();
         String tag = "a";
         String attribute = "abs:href";
-        String url = "some_link";
+        String url = "http://localhost/tci/details.php?id=102";
 
         //act
-        webCrawler.readUrl(url,tag,attribute);
-
+        Boolean readResult =  webCrawler.readUrl(url,tag,attribute);
+        int itemListResult = webCrawler.itemsList.size();
         //assert
-        assertEquals(true, webCrawler.readUrl(url,tag,attribute));
+        assertEquals(true, readResult);
+        assertEquals(1, itemListResult);
+
+    }
+
+    @Test
+    public void shouldReadUrlWithSearchPhrase() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.searchPhrase = "Clean Code: A Handbook of Agile Software Craftsmanship";
+        String tag = "a";
+        String attribute = "abs:href";
+        String url = "http://localhost/tci/details.php?id=102";
+
+        //act
+        Boolean readResult =  webCrawler.readUrl(url,tag,attribute);
+        Boolean itemFound = webCrawler.itemFound;
+        //assert
+        assertEquals(false, readResult);
+        assertEquals(true, itemFound);
+
+    }
+
+    @Test
+    public void shouldStartCrawling() {
 
     }
 }
