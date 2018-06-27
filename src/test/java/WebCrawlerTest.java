@@ -140,4 +140,19 @@ public class WebCrawlerTest {
         //assert
         assertEquals(3,webCrawler.itemsList.size());
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testEmptyItemsList() {
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.itemsList.get(0);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testEmptyLinksList() {
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.linksList.get(0);
+    }
+
+
+
 }
