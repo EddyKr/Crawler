@@ -10,6 +10,7 @@ public class WebCrawler {
 
     //Variables
     private WebScraper webScraper;
+    public DocumentHelper documentHelper;
     private Queue<String> itemsQueue;
     public List<String> linksList;
     public List<Item> itemsList;
@@ -30,6 +31,7 @@ public class WebCrawler {
         this.searchPhrase = null;
         this.elapsedTime = 0;
         this.itemFound = false;
+        this.documentHelper = new DocumentHelper();
     }
 
     // Getters
@@ -153,7 +155,7 @@ public class WebCrawler {
      */
     public boolean readUrl(String url, String findTag, String attribute){
         try {
-            Document doc = Jsoup.connect(url).validateTLSCertificates(false).get();
+            Document doc = documentHelper.getDocumentFromUrl(url);
             Elements links = doc.select(findTag);
             for (Element e : links) {
 
