@@ -57,4 +57,13 @@ public class WebCrawlerTest {
 
     }
 
+    @Test
+    public void readsAllURLs() {
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.readUrl("https://localhost/tci","a","abs:href");
+        assertEquals(11,webCrawler.linksList.size());
+    }
+
+
+
 }
