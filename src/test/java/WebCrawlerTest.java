@@ -125,4 +125,19 @@ public class WebCrawlerTest {
         //assert
         assertEquals(11,webCrawler.linksList.size());
     }
+
+    @Test
+    public void addDifferentItemsToItemList() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        Book bb = mock(Book.class);
+        Movie mm = mock(Movie.class);
+        Music mc = mock(Music.class);
+        //act
+        webCrawler.itemsList.add(bb);
+        webCrawler.itemsList.add(mm);
+        webCrawler.itemsList.add(mc);
+        //assert
+        assertEquals(3,webCrawler.itemsList.size());
+    }
 }
