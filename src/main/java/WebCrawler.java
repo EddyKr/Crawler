@@ -76,7 +76,7 @@ public class WebCrawler {
      * @param  action  action to be performed for scan
      */
     public void crawl(String action){
-        if(action != "all" || action != "specific"){
+        if(!action.equals("all") && !action.equals("specific")){
             throw new IllegalArgumentException("Illegal action: " + action);
         }
         this.itemsQueue.add(rootURL);
