@@ -46,13 +46,13 @@ public class WebCrawler {
      */
     public void startCrawling(String rootURL){
         this.rootURL = rootURL;
-        chooseAction();
+        chooseAction(documentHelper);
     }
 
     /**
      * Method that allows the user to choose his next action.
      */
-    public void chooseAction(){
+    public void chooseAction(DocumentHelper docHelper){
         System.out.println("Choose your next action:");
         System.out.println("Press 1 to scrape all items from the website.");
         System.out.println("Press 2 to look for specific item on the website.");
@@ -62,12 +62,12 @@ public class WebCrawler {
 
         switch(action){
             case "1":
-                crawl("all", documentHelper);
+                crawl("all", docHelper);
                 break;
             case "2":
                 System.out.println("Input a search phrase.");
                 searchPhrase = sc.nextLine();
-                crawl("specific", documentHelper);
+                crawl("specific", docHelper);
                 break;
 
             default:

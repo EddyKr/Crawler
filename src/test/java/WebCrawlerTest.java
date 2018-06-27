@@ -1,5 +1,6 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,10 +12,52 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class WebCrawlerTest {
+    public String HTML_STRING = "<div class=\"media-details\">\n" +
+            "      <h1>The Lord of the Rings: The Fellowship of the Ring</h1>\n" +
+            "      <table>\n" +
+            "        <tbody><tr>\n" +
+            "          <th>Category</th>\n" +
+            "          <td>Movies</td>\n" +
+            "        </tr>\n" +
+            "        <tr>\n" +
+            "          <th>Genre</th>\n" +
+            "          <td>Drama</td>\n" +
+            "        </tr>\n" +
+            "        <tr>\n" +
+            "          <th>Format</th>\n" +
+            "          <td>Blu-ray</td>\n" +
+            "        </tr>\n" +
+            "        <tr>\n" +
+            "          <th>Year</th>\n" +
+            "          <td>2001</td>\n" +
+            "        </tr>\n" +
+            "                <tr>\n" +
+            "          <th>Director</th>\n" +
+            "          <td>Peter Jackson</td>\n" +
+            "        </tr>\n" +
+            "        <tr>\n" +
+            "          <th>Writers</th>\n" +
+            "          <td>J.R.R. Tolkien, Fran Walsh, Philippa Boyens, Peter Jackson</td>\n" +
+            "        </tr>\n" +
+            "        <tr>\n" +
+            "          <th>Stars</th>\n" +
+            "          <td>Ron Livingston, Jennifer Aniston, David Herman, Ajay Naidu, Diedrich Bader, Stephen Root</td>\n" +
+            "        </tr>\n" +
+            "              </tbody></table>\n" +
+            "              <a href=\"catalog.php\">Personal Media Library</a>\n" +
+            "    </div>";
 
     @Before
     public void initialization(){
     }
+
+//    @Test
+//    public void shouldStartCrawling(){
+//        WebCrawler webCrawler = new WebCrawler();
+//        DocumentHelper docHelper = mock(DocumentHelper.class);
+//
+//        webCrawler.chooseAction(documentHelper);
+//    }
 
     @Test
     public void afterCreationShouldHaveNoItems() {
@@ -45,22 +88,44 @@ public class WebCrawlerTest {
         assertEquals(0, webCrawler.linksList.size());
     }
 
-//    @Test
-//    public void shouldReadUrlWithoutSearchPhrase() {
-//        //arrange
-//        WebCrawler webCrawler = new WebCrawler();
-//        DocumentHelper docHelper = mock(DocumentHelper.class);
-//        String tag = "a";
-//        String attribute = "abs:href";
-//        String url = "http://localhost/tci/details.php?id=102";
-//
-//        //act
-//        Boolean readResult =  webCrawler.readUrl(url,tag,attribute, docHelper);
-//        int itemListResult = webCrawler.itemsList.size();
-//        //assert
-//        assertEquals(true, readResult);
-//        assertEquals(1, itemListResult);
-//    }
+    @Test
+    public void shouldReadUrlWithoutSearchPhrase() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "http://something.com";
+        webCrawler.searchPhrase = "The Lord of the Rings: The Fellowship of the Ring";
+        String action = "specific";
+        Elements elements = mock(Elements.class);
+        DocumentHelper docHelper = mock(DocumentHelper.class);
+        Document document = Jsoup.parse(HTML_STRING);
+        when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
+
+        //act
+        webCrawler.crawl(action, docHelper);
+
+        //assert
+        assertEquals(1, webCrawler.itemsList.size());
+        assertEquals("2001", webCrawler.itemsList.get(0).year.toString());
+    }
+
+    @Test
+    public void shouldChooseActionAll() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        webCrawler.rootURL = "http://something.com";
+        System.setIn(new ByteArrayInputStream("1".getBytes()));
+        DocumentHelper docHelper = mock(DocumentHelper.class);
+
+        Document document = Jsoup.parse(HTML_STRING);
+        when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
+
+        //act
+        webCrawler.chooseAction(docHelper);
+
+        //assert
+        assertEquals(1, webCrawler.itemsList.size());
+        assertEquals("2001", webCrawler.itemsList.get(0).year.toString());
+    }
 
 //    @Test
 //    public void shouldReadUrlWithSearchPhrase() {
@@ -88,39 +153,7 @@ public class WebCrawlerTest {
         webCrawler.rootURL = "http://something.com";
         String action = "all";
         DocumentHelper docHelper = mock(DocumentHelper.class);
-        Document document = Jsoup.parse("<div class=\"media-details\">\n" +
-                "      <h1>The Lord of the Rings: The Fellowship of the Ring</h1>\n" +
-                "      <table>\n" +
-                "        <tbody><tr>\n" +
-                "          <th>Category</th>\n" +
-                "          <td>Movies</td>\n" +
-                "        </tr>\n" +
-                "        <tr>\n" +
-                "          <th>Genre</th>\n" +
-                "          <td>Drama</td>\n" +
-                "        </tr>\n" +
-                "        <tr>\n" +
-                "          <th>Format</th>\n" +
-                "          <td>Blu-ray</td>\n" +
-                "        </tr>\n" +
-                "        <tr>\n" +
-                "          <th>Year</th>\n" +
-                "          <td>2001</td>\n" +
-                "        </tr>\n" +
-                "                <tr>\n" +
-                "          <th>Director</th>\n" +
-                "          <td>Peter Jackson</td>\n" +
-                "        </tr>\n" +
-                "        <tr>\n" +
-                "          <th>Writers</th>\n" +
-                "          <td>J.R.R. Tolkien, Fran Walsh, Philippa Boyens, Peter Jackson</td>\n" +
-                "        </tr>\n" +
-                "        <tr>\n" +
-                "          <th>Stars</th>\n" +
-                "          <td>Ron Livingston, Jennifer Aniston, David Herman, Ajay Naidu, Diedrich Bader, Stephen Root</td>\n" +
-                "        </tr>\n" +
-                "              </tbody></table>\n" +
-                "    </div>");
+        Document document = Jsoup.parse(HTML_STRING);
         when(docHelper.getDocumentFromUrl(anyString())).thenReturn(document);
 
         //act
