@@ -128,7 +128,7 @@ public class WebCrawlerTest {
         webCrawler.crawl("specific");
 
         //assert
-        System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
+        
     }
 
     @Test
@@ -142,7 +142,7 @@ public class WebCrawlerTest {
         webCrawler.crawl("specific");
 
         //assert
-        System.out.print(webCrawler.itemsList.size() + webCrawler.linksList.size());
+        System.out.print(webCrawler.itemFound);
     }
 
 //    @Test
