@@ -54,7 +54,7 @@ public class ParamWebScraperTest {
 
 
     private String url;
-    private Item itm;
+    private Item item;
     WebScraper wc;
 
     @Before
@@ -66,15 +66,15 @@ public class ParamWebScraperTest {
     public ParamWebScraperTest(String url, Item itm){
 
         this.url = url;
-        this.itm = itm;
+        this.item = itm;
 
     }
 
 
     @Test
-    public void test() throws IOException {
+    public void scrapeLinkObject() throws IOException {
         Document doc = Jsoup.connect(url).validateTLSCertificates(false).get();
-        assertEquals((Object) itm.title,(Object) wc.itemMapper.mapItem(doc).title);
-        assertEquals((Object) itm.category,(Object) wc.itemMapper.mapItem(doc).category);
+        assertEquals((Object) item.title,(Object) wc.itemMapper.mapItem(doc).title);
+        assertEquals((Object) item.category,(Object) wc.itemMapper.mapItem(doc).category);
     }
 }
