@@ -13,10 +13,10 @@ public class WebCrawler {
     private Queue<String> itemsQueue;
     public List<String> linksList;
     public List<Item> itemsList;
-    private String rootURL;
-    private String searchPhrase;
+    public String rootURL;
+    public String searchPhrase;
     private long elapsedTime;
-    private boolean itemFound;
+    public boolean itemFound;
 
     /**
      * Constructor of a WebCrawler used to initialize lists and other objects needed to perform the scan.
@@ -76,6 +76,9 @@ public class WebCrawler {
      * @param  action  action to be performed for scan
      */
     public void crawl(String action){
+        if(!action.equals("all") && !action.equals("specific")){
+            throw new IllegalArgumentException("Illegal action: " + action);
+        }
         this.itemsQueue.add(rootURL);
         this.linksList.add(rootURL);
 
@@ -83,7 +86,6 @@ public class WebCrawler {
 
         while(!itemsQueue.isEmpty()){
             String v = this.itemsQueue.remove();
-            //Crawl only target website - TODO change v.contains("tci") to accept more URLs
             if(v.contains(rootURL)){
                 if (action.equals("all")) {
                     searchPhrase = null;
