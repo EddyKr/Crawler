@@ -114,4 +114,15 @@ public class WebCrawlerTest {
         //assert
         assertEquals(expected, actual);
     }
+
+
+    @Test
+    public void checkRootURLsAmount() {
+        //arrange
+        WebCrawler webCrawler = new WebCrawler();
+        //act
+        webCrawler.readUrl("https://localhost/tci", "a", "abs:href");
+        //assert
+        assertEquals(11,webCrawler.linksList.size());
+    }
 }
